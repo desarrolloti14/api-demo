@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class PostServiceImp implements PostService {
 	@Autowired
 	private PostRepository postRepository;
 
-	@Override
+	@Override	
 	public List<Post> getAllPost() {
 		return postRepository.findAll();
 	}
@@ -25,6 +26,7 @@ public class PostServiceImp implements PostService {
 
 	@Override
 	public Post createPost(Post post) {
+		post.setCreated_at(new Date());
 		return postRepository.save(post);
 	}
 
@@ -34,6 +36,7 @@ public class PostServiceImp implements PostService {
 		if (postDB == null) {
 			return null;
 		}
+		postDB.setUpdate_at(new Date());
 		postDB.setTitle(post.getTitle());
 		postDB.setBody(post.getBody());
 		return postRepository.save(postDB);
