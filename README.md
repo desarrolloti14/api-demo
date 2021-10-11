@@ -19,3 +19,6 @@ Las pruebas las puedes hacer con PostMan el cual nos permite realizar peticiones
 
 ## Escrito por 👨‍💻
 *GitHub: [Moises Arrona](https://github.com/moisesarrona)*
+
+## helps
+- https://ozenero.com/resolve-json-infinite-recursion-problems-working-jackson

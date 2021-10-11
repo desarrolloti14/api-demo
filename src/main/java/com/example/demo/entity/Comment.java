@@ -1,16 +1,16 @@
 package com.example.demo.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,32 +24,27 @@ import lombok.Data;
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Comment.class)
 @Entity
-@Table(name = "posts")
+@Table(name = "comments")
 @Data
-public class Post {
+public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	public Long id;
 	
-	@NotNull(message = "The title is required")
-	@Size(max = 50, message = "Title is very long")
-	@Column(length = 50, nullable = false)
-	private String title;
-	
-	@NotNull(message = "The body is required")
-	@Size(max = 50, message = "Body is very long")
-	@Column(length = 150, nullable = false)
-	private String body;
+	@NotNull(message = "The comment is required")
+	@Size(max = 50, message =  "The comment is very long")
+	@Column(length = 150)
+	public String comment;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date created_at;
+	public Date created_at;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date update_at;
-
+	public Date updated_at;
 	
-	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-	private List<Comment> comments = new ArrayList<Comment>();
-	//private Set<Comment> comments;
+	//@JsonIgnore
+	@ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JoinColumn(name="post_id", referencedColumnName="id", nullable = false)
+	private Post post;
 	
-}	
+}
