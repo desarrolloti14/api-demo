@@ -15,12 +15,6 @@ public class CommentServiceImp implements CommentService {
 	private CommentRepository commentRepository;
 
 	@Override
-	public List<Comment> getCommentPost(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Comment getComment(Long id) {
 		return commentRepository.findById(id).orElse(null);
 	}
@@ -29,6 +23,7 @@ public class CommentServiceImp implements CommentService {
 	public Comment createComment(Comment comment) {
 		comment.setCreated_at(new Date());
 		return commentRepository.save(comment);
+
 	}
 
 	@Override
@@ -40,11 +35,11 @@ public class CommentServiceImp implements CommentService {
 		commentDB.setComment(comment.getComment());
 		commentDB.setUpdated_at(new Date());
 		return commentRepository.save(commentDB);
+
 	}
 
 	@Override
 	public void deleteComment(Long id) {
 		commentRepository.deleteById(id);
 	}
-
 }

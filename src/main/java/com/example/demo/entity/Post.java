@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -31,13 +31,13 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull(message = "The title is required")
-	@Size(max = 50, message = "Title is very long")
+	@NotEmpty(message = "The title is required")
+	@Size(max = 50, min = 1, message = "Title length is 1-50")
 	@Column(length = 50, nullable = false)
 	private String title;
 	
-	@NotNull(message = "The body is required")
-	@Size(max = 50, message = "Body is very long")
+	@NotEmpty(message = "The body is required")
+	@Size(max = 150, min = 1, message = "Body length is 1-50")
 	@Column(length = 150, nullable = false)
 	private String body;
 	
@@ -46,7 +46,6 @@ public class Post {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date update_at;
-
 	
 	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
 	private List<Comment> comments = new ArrayList<Comment>();

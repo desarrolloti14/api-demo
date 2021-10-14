@@ -46,7 +46,7 @@ public class PostController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> createPost(@Valid @RequestBody Post post) {
+	public ResponseEntity<?> createPost(@RequestBody @Valid Post post) {
 		Post postCreated = postService.createPost(post);
 		return ResponseEntity.status(HttpStatus.CREATED).body(postCreated);
 	}
