@@ -19,6 +19,15 @@ import java.util.List;
 public class CommentController {
 	@Autowired
 	private CommentService commentService;
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> getCommentIdPost(@PathVariable(value = "id") Long id) {
+		List<Comment> comments = commentService.getCommentIdPost(id);
+		if (comments == null) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(comments);
+	}
 	
 	@PostMapping
 	public ResponseEntity<?> createComment(@Valid @RequestBody Comment comment) {

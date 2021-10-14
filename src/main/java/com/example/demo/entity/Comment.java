@@ -17,13 +17,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Comment.class)
 @Entity
 @Table(name = "comments")
 @Data
@@ -43,7 +41,7 @@ public class Comment {
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date updated_at;
 	
-	//@JsonIgnore
+	@JsonBackReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch= FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinColumn(name="post_id", referencedColumnName="id", nullable = false, updatable = false)

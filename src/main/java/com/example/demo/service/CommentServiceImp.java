@@ -15,6 +15,11 @@ public class CommentServiceImp implements CommentService {
 	private CommentRepository commentRepository;
 
 	@Override
+	public List<Comment> getCommentIdPost(Long id) {
+		return commentRepository.findCommentByPostId(id);
+	}
+
+	@Override
 	public Comment getComment(Long id) {
 		return commentRepository.findById(id).orElse(null);
 	}
