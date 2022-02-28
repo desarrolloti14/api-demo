@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.example.demo.errorhandler.InvalidDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,15 +48,22 @@ public class PostController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> createPost(@RequestBody @Valid Post post) {
+	public ResponseEntity<?> createPost(@Valid @RequestBody Post post, BindingResult result) {
+		if (result.hasErrors()) {
+			throw new InvalidDataException(result);
+		}
 		Post postCreated = postService.createPost(post);
 		return ResponseEntity.status(HttpStatus.CREATED).body(postCreated);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> updateEntity(@Valid @PathVariable(value = "id") Long id, @RequestBody Post post) {
+	public ResponseEntity<?> updateEntity(@Valid @PathVariable(value = "id") Long id, @RequestBody Post post, BindingResult result) {
 		post.setId(id);
 		Post postUpdated = postService.updatePost(post);
+		if (result.hasErrors()) {
+			throw new InvalidDataException(result);
+		}
+
 		if (postUpdated == null) {
 			return ResponseEntity.notFound().build();
 		}
