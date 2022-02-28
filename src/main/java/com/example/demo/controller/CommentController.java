@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import javax.validation.Valid;
 
-import com.example.demo.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
